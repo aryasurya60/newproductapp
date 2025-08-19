@@ -5,8 +5,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Navbar = () => {
+   const  navigate=useNavigate()
+  const token=localStorage.getItem('token') // token access cheyan
+
+  let removeUser=()=>{
+localStorage.removeItem('token')
+navigate('/login')
+  }
   return (
     <div>
          <Box sx={{ flexGrow: 1 }}>
@@ -24,9 +31,17 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             productApp
           </Typography>
-          <Link to ='/login'><Button  style={{color:"white"}}>Login</Button></Link>
+          {!token &&(
+         <Link to ='/login'><Button  style={{color:"white"}}>Login</Button></Link>
+         )}
+          {token&&(
+            <>
          <Link to ='/add'> <Button style={{color:"white"}}>Add product</Button></Link>
-          <Button style={{color:"white"}}>Logout</Button>
+         
+         
+          <Button style={{color:"white"}}  onClick={removeUser}>Logout</Button>
+          </>
+         )}
         </Toolbar>
       </AppBar>
     </Box>

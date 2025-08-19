@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 const morgan = require('morgan');
 const cors = require('cors');
+const jwt=require('jsonwebtoken')
 const productData = require('./model/productData')
 const userData=require('./model/userData')
 const userRoute = require('./routes/userRoute');
@@ -14,6 +15,7 @@ const port = process.env.port
 
 app.use(morgan('dev'));
 app.use(cors());
+
 app.use(express.json());
 
 app.get("/api", (req,res) => {

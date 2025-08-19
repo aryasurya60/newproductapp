@@ -1,24 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import axiosInstance from '../axiosinterception';
+
 
 const Add = () => {
   const [form, setForm] = useState({
-    productTitle: '',
-    productDescription: '',
-    imageUrl: '',
+    title: '',
+    description: '',
+    image: '',
     status: ''
   });
 
+
+  let location=useLocation();
+      useEffect(()=>{
+        if (location.state!=null){
+          setForm({...form,title:location.state.Blog.title,
+            description:location.state.Blog.description,
+            image:location.state.Blog.image,
+            status:location.state.Blog.status})
+        }
+      },[])
+
+
   const navigate = useNavigate();
 
-  function submitform(e) {
+  function submitform(e){
+    e.preventDefault();
+    if (location.state!=null){
+      axiosInstance.put('http://localhost:5000/route/update/'+location.state.Blog._id,form)
+      .then((res)=>{
+        alert('updated')
+        navigate('/add')
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+    }else{
     e.preventDefault();
 
-    axios.post('http://localhost:5000/route/add', form)
+    axiosInstance.post('http://localhost:5000/route/add', form)
       .then((res) => {
         console.log('Product added:', res.data);
         alert('Product added successfully!');
@@ -29,7 +54,9 @@ const Add = () => {
         alert('Failed to add product');
       });
   }
-
+}
+  // to track the current location,use uselocation
+      
   return (
     <div style={{ marginLeft: "400px", marginTop: "80px" }}>
       <h2 style={{ marginLeft: "100px" }}>ADD PRODUCT</h2>
@@ -45,7 +72,7 @@ const Add = () => {
           variant="outlined"
           type="text"
           value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          onChange={(e) => setForm({ ...form,title: e.target.value })}
         /><br />
 
         <TextField
@@ -53,7 +80,7 @@ const Add = () => {
           variant="outlined"
           type="text"
           value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          onChange={(e) => setForm({ ...form,description: e.target.value })}
         /><br />
 
         <TextField
