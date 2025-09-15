@@ -32,7 +32,7 @@ const Add = () => {
   function submitform(e){
     e.preventDefault();
     if (location.state!=null){
-      axiosInstance.put('/api/route/update/'+location.state.Blog._id,form)
+      axiosInstance.put('/route/update/'+location.state.Blog._id,form)
       .then((res)=>{
         alert('updated')
         navigate('/')
@@ -43,7 +43,7 @@ const Add = () => {
     }else{
     e.preventDefault();
 
-    axiosInstance.post('/api/route/add', form)
+    axiosInstance.post('/route/add', form)
       .then((res) => {
         console.log('Product added:', res.data);
         alert('Product added successfully!');
