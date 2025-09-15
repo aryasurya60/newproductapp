@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosInstance=axios.create({
-    baseURL:'http://localhost:5000'
+    baseURL:'/api'
 })
 axiosInstance.interceptors.request.use((config)=>{ //config cheyyan vendi
     const accessToken=localStorage.getItem("token") // token read cheyyan

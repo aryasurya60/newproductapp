@@ -35,7 +35,7 @@ const Add = () => {
       axiosInstance.put('http://localhost:5000/route/update/'+location.state.Blog._id,form)
       .then((res)=>{
         alert('updated')
-        navigate('/add')
+        navigate('/')
       })
       .catch((error)=>{
         console.log(error)

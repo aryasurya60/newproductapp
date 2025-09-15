@@ -1,7 +1,7 @@
 const express=require('express')
 const router=express.Router()
 const jwt=require('jsonwebtoken')
-const userModel=require('../model/userData')
+ const userModel=require('../model/userData')
 
 router.use(express.json())
 router.use(express.urlencoded({extended:true}))

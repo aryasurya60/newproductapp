@@ -15,21 +15,21 @@ const Login = () => {
 
   const capValue = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/user/login', form)
+    axios.post('/api/user/login', form)
       .then((res) => {
         // console.log('form submitted:', res.data);
         // alert('Login successful');
         alert(res.data.message)
         if(res.data.usertoken){
           localStorage.setItem('token',res.data.usertoken);
-          navigate('/login');
+          navigate('/');
         }
         
       })
       .catch((err) => {
         console.error(err);
         alert("Invalid credentials or server error");
-        navigate('/');
+        navigate('/login');
       });
 
   }
